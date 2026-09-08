@@ -287,7 +287,8 @@ const cases = {
     title: "NovaBank",
     label: "Приложение\nонлайн-банка",
     accent: "blue",
-    hero: "nova-case-hero.webp",
+    hero: "nova-hand-mockup-v1.jpg",
+    finalImage: "nova-case-final-user.jpg",
     heroScreens: [
       { src: "nova-main-page.png", alt: "Главная страница NovaBank с балансом и быстрыми действиями" },
       { src: "nova-profile-screen.png", alt: "Профиль пользователя и настройки NovaBank" },
@@ -319,7 +320,6 @@ const cases = {
     detailScreens: ["nova-transfer-amount.webp", "nova-transfer-success.webp"],
     researchScreens: ["nova-onboarding-phone.webp", "nova-onboarding-welcome.webp", "nova-onboarding-faceid.webp"],
     resultScreens: ["nova-transfer-amount.webp", "nova-transfer-success.webp"],
-    finalImage: "nova-case-final.webp",
     context: (
       <>
         <p>Мобильные банки объединяют десятки сценариев: переводы, платежи, управление картами и счетами, историю операций, поиск банкоматов, курсы валют и оформление новых продуктов.</p>
@@ -455,6 +455,19 @@ function CaseGallery({ item, images, layout = "trio", tone = "light", caption, p
   );
 }
 
+function CaseWideVisual({ src, alt, tone = "accent", variant = "default", priority = false }) {
+  return (
+    <figure className={`case-wide-visual case-wide-visual--${tone} case-wide-visual--${variant} reveal is-visible`}>
+      <img
+        src={sitePath(`/assets/${src}`)}
+        alt={alt}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+      />
+    </figure>
+  );
+}
+
 function NovaCaseBody({ item }) {
   return (
     <>
@@ -463,6 +476,14 @@ function NovaCaseBody({ item }) {
         <p>Пользователь открывает банк ради конкретного действия, но на главном экране основные функции часто конкурируют с предложениями и сервисами. Это усложняет навигацию и создаёт лишнюю неопределённость во время операций с деньгами.</p>
         <p className="case-problem"><strong>Проблема:</strong> как объединить широкий банковский функционал, сохранив понятную иерархию, быстрый доступ к частым действиям и контроль на каждом этапе операции?</p>
       </CaseSection>
+
+      <CaseGallery
+        item={item}
+        images={item.heroScreens}
+        layout="trio"
+        tone="light"
+        caption="Главная, профиль и понятный результат операции"
+      />
 
       <CaseSection title="Задача и цели">
         <p>Спроектировать концепт мобильного банка, в котором основные финансовые сценарии связаны между собой и используют единую логику взаимодействия.</p>
@@ -490,7 +511,7 @@ function NovaCaseBody({ item }) {
         item={item}
         images={item.onboardingScreens}
         layout="trio"
-        tone="light"
+        tone="accent"
         caption="Первый вход: выбор способа, подтверждение номера и подключение Face ID"
       />
 
@@ -549,12 +570,11 @@ function NovaCaseBody({ item }) {
         <p>Основные действия доступны с главного экрана, дополнительный функционал не мешает регулярным операциям, а каждый финансовый сценарий сопровождается проверкой данных и понятным результатом.</p>
       </CaseSection>
 
-      <CaseGallery
-        item={item}
-        images={item.supportScreens}
-        layout="duo"
-        tone="light"
-        caption="Поддержка: от первого обращения до завершённого диалога"
+      <CaseWideVisual
+        src={item.finalImage}
+        alt="Финальная подборка экранов NovaBank"
+        tone="accent"
+        variant="final"
       />
     </>
   );
@@ -759,7 +779,13 @@ function CasePage({ item }) {
         </section>
 
         {isNova ? (
-          <CaseGallery item={item} images={item.heroScreens} layout="hero" tone="accent" priority />
+          <CaseWideVisual
+            src={item.hero}
+            alt="Главный экран NovaBank в реалистичном мокапе смартфона"
+            tone="accent"
+            variant="hero"
+            priority
+          />
         ) : (
           <div className="case-hero reveal is-visible">
             <img src={sitePath(`/assets/${item.hero}`)} alt={`Презентационное изображение проекта ${item.title}`} />
