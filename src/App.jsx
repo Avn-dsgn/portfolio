@@ -288,6 +288,33 @@ const cases = {
     label: "Приложение\nонлайн-банка",
     accent: "blue",
     hero: "nova-case-hero.webp",
+    heroScreens: [
+      { src: "nova-main-page.png", alt: "Главная страница NovaBank с балансом и быстрыми действиями" },
+      { src: "nova-profile-screen.png", alt: "Профиль пользователя и настройки NovaBank" },
+      { src: "nova-payment-success.png", alt: "Экран успешно выполненного платежа в NovaBank" },
+    ],
+    onboardingScreens: [
+      { src: "nova-entrance-welcome.png", alt: "Выбор способа входа в NovaBank" },
+      { src: "nova-entrance-phone.png", alt: "Вход в NovaBank по номеру телефона" },
+      { src: "nova-face-id.png", alt: "Подключение быстрого входа с Face ID" },
+    ],
+    accountScreens: [
+      { src: "nova-account-screen.png", alt: "Управление рублёвым счётом в NovaBank" },
+      { src: "nova-card-screen.png", alt: "Управление картой Nova Pay МИР" },
+    ],
+    transferScreens: [
+      { src: "nova-transfer-start.png", alt: "Ввод суммы перевода по номеру телефона" },
+      { src: "nova-transfer-success.webp", alt: "Экран результата перевода" },
+    ],
+    analyticsScreens: [
+      { src: "nova-analytics-screen.png", alt: "Аналитика расходов по категориям" },
+      { src: "nova-history-screen.png", alt: "История операций в NovaBank" },
+      { src: "nova-calendar.png", alt: "Выбор периода для анализа операций" },
+    ],
+    supportScreens: [
+      { src: "nova-support-start.png", alt: "Начальный экран поддержки NovaBank" },
+      { src: "nova-support-chat.png", alt: "Диалог пользователя с поддержкой NovaBank" },
+    ],
     phones: ["nova-onboarding-phone.webp", "nova-onboarding-welcome.webp", "nova-onboarding-faceid.webp"],
     detailScreens: ["nova-transfer-amount.webp", "nova-transfer-success.webp"],
     researchScreens: ["nova-onboarding-phone.webp", "nova-onboarding-welcome.webp", "nova-onboarding-faceid.webp"],
@@ -405,6 +432,172 @@ function CaseScreenPair({ item, images }) {
         </div>
       ))}
     </div>
+  );
+}
+
+function CaseGallery({ item, images, layout = "trio", tone = "light", caption, priority = false }) {
+  return (
+    <figure className={`case-gallery case-gallery--${layout} case-gallery--${tone} reveal`}>
+      <div className="case-gallery__track">
+        {images.map((image, index) => (
+          <div className="case-gallery__item" key={image.src}>
+            <img
+              src={sitePath(`/assets/${image.src}`)}
+              alt={image.alt}
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority && index === 0 ? "high" : "auto"}
+            />
+          </div>
+        ))}
+      </div>
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+  );
+}
+
+function NovaCaseBody({ item }) {
+  return (
+    <>
+      <CaseSection title="Контекст и проблема">
+        <p>Мобильный банк объединяет переводы, платежи, управление картами, аналитику расходов и дополнительные продукты. Чем больше возможностей появляется в приложении, тем сложнее сохранить быстрый доступ к регулярным операциям.</p>
+        <p>Пользователь открывает банк ради конкретного действия, но на главном экране основные функции часто конкурируют с предложениями и сервисами. Это усложняет навигацию и создаёт лишнюю неопределённость во время операций с деньгами.</p>
+        <p className="case-problem"><strong>Проблема:</strong> как объединить широкий банковский функционал, сохранив понятную иерархию, быстрый доступ к частым действиям и контроль на каждом этапе операции?</p>
+      </CaseSection>
+
+      <CaseSection title="Задача и цели">
+        <p>Спроектировать концепт мобильного банка, в котором основные финансовые сценарии связаны между собой и используют единую логику взаимодействия.</p>
+        <dl className="goals-list">
+          <div><dt>Для пользователя</dt><dd>Быстро управлять деньгами, проверять условия перед подтверждением и понимать результат каждой операции.</dd></div>
+          <div><dt>Для продукта</dt><dd>Выстроить последовательный путь от просмотра финансов до перевода, платежа или управления картой.</dd></div>
+          <div><dt>Для бизнеса</dt><dd>Увеличить долю операций, выполняемых внутри приложения, и сделать дополнительные продукты заметными без перегрузки главного экрана.</dd></div>
+        </dl>
+        <h3>Критерии успеха</h3>
+        <ul>
+          <li>пользователь быстро находит нужное действие;</li>
+          <li>основные операции выполняются без лишних возвратов;</li>
+          <li>до подтверждения понятны сумма, получатель и источник списания;</li>
+          <li>после операции пользователь однозначно понимает её статус.</li>
+        </ul>
+      </CaseSection>
+
+      <CaseSection title="Исследование">
+        <p>Я изучил, в каких ситуациях люди используют мобильный банк и какие функции считают обязательными. Для этого провёл пользовательские интервью, сформулировал Jobs to be Done и разобрал путь пополнения карты с помощью Customer Journey Map.</p>
+        <p>Дополнительно сравнил Альфа-Банк, Т-Банк, Сбер и РНКБ: изучил главные экраны, переводы, платежи, управление картами, историю операций и дополнительные продукты.</p>
+        <p>Исследование показало, что пользователям не требуется новая банковская механика. Основной потенциал улучшения находится в иерархии функций, скорости регулярных операций и понятной обратной связи.</p>
+      </CaseSection>
+
+      <CaseGallery
+        item={item}
+        images={item.onboardingScreens}
+        layout="trio"
+        tone="light"
+        caption="Первый вход: выбор способа, подтверждение номера и подключение Face ID"
+      />
+
+      <CaseSection title="Гипотезы">
+        <p>На основе исследования я сформулировал четыре направления:</p>
+        <ul className="case-hypotheses">
+          <li>если вынести баланс, перевод и пополнение на главный экран, регулярные сценарии будут начинаться быстрее;</li>
+          <li>если организовать действия вокруг выбранной карты или счёта, пользователю не придётся искать их в разных разделах;</li>
+          <li>если отделить дополнительные продукты от основных операций, интерфейс останется информативным, но не будет ощущаться перегруженным;</li>
+          <li>если показывать проверку данных и отдельный экран результата, финансовые операции станут более предсказуемыми.</li>
+        </ul>
+      </CaseSection>
+
+      <CaseSection title="Главное решение">
+        <h3>Главная как панель управления финансами</h3>
+        <p>В верхней части главного экрана находятся основная карта, баланс и быстрые действия — перевод и пополнение. Ниже расположены предложения партнёров, знакомые получатели и остальные продукты банка.</p>
+        <p>Такая иерархия помогает сначала понять состояние финансов и начать нужную операцию, а затем перейти к дополнительным возможностям.</p>
+      </CaseSection>
+
+      <CaseGallery
+        item={item}
+        images={item.accountScreens}
+        layout="duo"
+        tone="light"
+        caption="Действия со счётом и картой собраны вокруг выбранного продукта"
+      />
+
+      <CaseSection title="Переводы">
+        <p>Сценарий перевода построен последовательно: выбор получателя и счёта списания, ввод суммы, проверка данных, подтверждение и результат.</p>
+        <p>Перед отправкой пользователь видит ключевую информацию об операции. После завершения может сохранить справку, создать шаблон или повторить платёж. Сценарий не обрывается на подтверждении и предлагает логичные следующие действия.</p>
+      </CaseSection>
+
+      <CaseGallery
+        item={item}
+        images={item.transferScreens}
+        layout="duo"
+        tone="accent"
+        caption="От ввода суммы до понятного результата операции"
+      />
+
+      <CaseSection title="Контроль расходов">
+        <p>Аналитика показывает структуру расходов по категориям, счетам и выбранному периоду. Из общей статистики можно перейти к конкретным операциям и проверить, из чего сформировалась сумма.</p>
+        <p>История, аналитика и информация о транзакции используют одну логику, поэтому пользователь может двигаться от общей картины к деталям без переключения между несвязанными разделами.</p>
+      </CaseSection>
+
+      <CaseGallery
+        item={item}
+        images={item.analyticsScreens}
+        layout="trio"
+        tone="light"
+        caption="Аналитика, история операций и выбор периода"
+      />
+
+      <CaseSection title="Результат">
+        <p>Я разработал целостный концепт мобильного банка и связал ключевые сценарии: управление счетами и картами, переводы, платежи, аналитику, историю и оформление новых продуктов.</p>
+        <p>Основные действия доступны с главного экрана, дополнительный функционал не мешает регулярным операциям, а каждый финансовый сценарий сопровождается проверкой данных и понятным результатом.</p>
+      </CaseSection>
+
+      <CaseGallery
+        item={item}
+        images={item.supportScreens}
+        layout="duo"
+        tone="light"
+        caption="Поддержка: от первого обращения до завершённого диалога"
+      />
+    </>
+  );
+}
+
+function DefaultCaseBody({ item }) {
+  return (
+    <>
+      <CaseSection title="Контекст">{item.context}</CaseSection>
+      <CasePhones item={item} />
+
+      <CaseSection title="Задача и цели">
+        <dl className="goals-list">
+          <div><dt>Задача</dt><dd>{item.goal.task}</dd></div>
+          <div><dt>Цель пользователя</dt><dd>{item.goal.user}</dd></div>
+          <div><dt>Цель бизнеса</dt><dd>{item.goal.business}</dd></div>
+        </dl>
+      </CaseSection>
+
+      <CaseScreenPair item={item} images={item.detailScreens} />
+
+      <CaseSection title="Оценка успеха">
+        <p>После запуска я бы отслеживал:</p>
+        <ul>{item.metrics.map((metric) => <li key={metric}>{metric}</li>)}</ul>
+        <p className="case-note">Для концепта это критерии будущей проверки, а не достигнутые показатели.</p>
+      </CaseSection>
+
+      <CasePhones item={item} images={item.researchScreens} className="case-phone-stage--research" />
+
+      <CaseSection title="Исследование">{item.research}</CaseSection>
+      <CaseScreenPair item={item} images={item.resultScreens} />
+
+      <CaseSection title="Результат">
+        <p>{item.resultLead}</p>
+        <p>В рамках проекта были созданы:</p>
+        <ul>{item.results.map((result) => <li key={result}>{result}</li>)}</ul>
+        <p>{item.next}</p>
+      </CaseSection>
+
+      <div className="case-final-image reveal">
+        <img src={sitePath(`/assets/${item.finalImage}`)} alt={`Финальная подборка экранов проекта ${item.title}`} loading="lazy" />
+      </div>
+    </>
   );
 }
 
@@ -551,6 +744,8 @@ function BackToTop() {
 }
 
 function CasePage({ item }) {
+  const isNova = item.title === "NovaBank";
+
   return (
     <div className={`site case-site case-site--${item.accent}`}>
       <SmoothScroll />
@@ -563,44 +758,15 @@ function CasePage({ item }) {
           <p>{item.label}</p>
         </section>
 
-        <div className="case-hero reveal is-visible">
-          <img src={sitePath(`/assets/${item.hero}`)} alt={`Презентационное изображение проекта ${item.title}`} />
-        </div>
+        {isNova ? (
+          <CaseGallery item={item} images={item.heroScreens} layout="hero" tone="accent" priority />
+        ) : (
+          <div className="case-hero reveal is-visible">
+            <img src={sitePath(`/assets/${item.hero}`)} alt={`Презентационное изображение проекта ${item.title}`} />
+          </div>
+        )}
 
-        <CaseSection title="Контекст">{item.context}</CaseSection>
-        <CasePhones item={item} />
-
-        <CaseSection title="Задача и цели">
-          <dl className="goals-list">
-            <div><dt>Задача</dt><dd>{item.goal.task}</dd></div>
-            <div><dt>Цель пользователя</dt><dd>{item.goal.user}</dd></div>
-            <div><dt>Цель бизнеса</dt><dd>{item.goal.business}</dd></div>
-          </dl>
-        </CaseSection>
-
-        <CaseScreenPair item={item} images={item.detailScreens} />
-
-        <CaseSection title="Оценка успеха">
-          <p>После запуска я бы отслеживал:</p>
-          <ul>{item.metrics.map((metric) => <li key={metric}>{metric}</li>)}</ul>
-          <p className="case-note">Для концепта это критерии будущей проверки, а не достигнутые показатели.</p>
-        </CaseSection>
-
-        <CasePhones item={item} images={item.researchScreens} className="case-phone-stage--research" />
-
-        <CaseSection title="Исследование">{item.research}</CaseSection>
-        <CaseScreenPair item={item} images={item.resultScreens} />
-
-        <CaseSection title="Результат">
-          <p>{item.resultLead}</p>
-          <p>В рамках проекта были созданы:</p>
-          <ul>{item.results.map((result) => <li key={result}>{result}</li>)}</ul>
-          <p>{item.next}</p>
-        </CaseSection>
-
-        <div className="case-final-image reveal">
-          <img src={sitePath(`/assets/${item.finalImage}`)} alt={`Финальная подборка экранов проекта ${item.title}`} loading="lazy" />
-        </div>
+        {isNova ? <NovaCaseBody item={item} /> : <DefaultCaseBody item={item} />}
 
         <p className="case-thanks reveal">Спасибо за просмотр</p>
       </main>
